@@ -1,16 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"sort"
 )
 
-func getMedian(s []int) int {
+func getMedian(s []int) float64 {
 	l := len(s)
 	if l%2 == 1 {
 		i := l / 2
-		return s[i]
+		return float64(s[i])
 	}
-	return (s[l/2-1] + s[l/2]) / 2.0 //Need to consider decimals
+	middle1 := float64(s[l/2-1])
+	middle2 := float64(s[l/2])
+	result := (middle1 + middle2) / 2.0 //Need to consider decimals
+	return result
 }
 
 func addNewValue(trailing []int, new int) []int {
@@ -51,7 +55,7 @@ func activityNotifications(expenditure []int32, d int32) int32 {
 	numNotifications := 0
 	for i := int(d); i < len(expenditure); i++ {
 		median := getMedian(trailing)
-		if int(expenditure[i]) >= 2*median {
+		if float64(expenditure[i]) >= 2*median {
 			numNotifications++
 		}
 		trailing = addNewValue(trailing, int(expenditure[i]))
@@ -63,5 +67,5 @@ func activityNotifications(expenditure []int32, d int32) int32 {
 func main() {
 	input := []int32{1, 2, 3, 4, 4}
 	d := int32(4)
-	activityNotifications(input, d)
+	fmt.Println(activityNotifications(input, d))
 }
