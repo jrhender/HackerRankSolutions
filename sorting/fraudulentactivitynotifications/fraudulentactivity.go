@@ -17,28 +17,25 @@ func getMedian(s []int) float64 {
 	return result
 }
 
-func addNewValue(trailing []int, new int) []int {
-	trailing = append(trailing, new)
-
+func addNewValue(s []int, new int) []int {
 	// Insertion sort
-	for i := len(trailing) - 2; i >= 0; i-- { // Going down through trailing to sort
-		if new >= trailing[i] {
-			return trailing
+	i := 0
+	for ; i < len(s); i++ { // Going down through trailing to sort
+		if new >= s[i] {
+			break
 		}
-		trailing[i+1] = trailing[i]
-		trailing[i] = new
 	}
-	return trailing
+	s = append(s, 0 /* use the zero value of the element type */)
+	copy(s[i+1:], s[i:])
+	s[i] = new
+	return s
 }
 
 func removeOldValue(a []int, toRemove int) []int {
 	i := sort.SearchInts(a, toRemove)
 
 	// Remove the element at index i from a.
-	copy(a[i:], a[i+1:]) // Shift a[i+1:] left one index.
-	a[len(a)-1] = 0      // Erase last element (write zero value).
-	a = a[:len(a)-1]     // Truncate slice.
-
+	a = append(a[:i], a[i+1:]...)
 	return a
 }
 
