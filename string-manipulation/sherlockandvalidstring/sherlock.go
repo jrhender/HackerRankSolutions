@@ -22,11 +22,8 @@ func isValid(s string) string {
 		if curCount == 0 {
 			continue
 		}
-		if curCount > first+1 || curCount < first-1 {
-			return "NO"
-		}
 		if curCount != first {
-			if differentCount == 0 {
+			if differentCount == 0 && (curCount-1 == first || curCount+1 == first || curCount-1 == 0) {
 				differentCount++
 			} else {
 				return "NO"
